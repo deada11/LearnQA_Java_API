@@ -1,3 +1,4 @@
+import constants.Constants;
 import io.restassured.RestAssured;
 import io.restassured.http.Headers;
 import io.restassured.path.json.JsonPath;
@@ -6,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class TestRestAssured {
 
@@ -21,11 +23,7 @@ public class TestRestAssured {
                 .get(Constants.URL + "/hello")
                 .jsonPath();
         String name = response.get("answer");
-        if (name == null) {
-            System.out.println("No key");
-        } else {
-            System.out.println(name);
-        }
+        System.out.println(Objects.requireNonNullElse(name, "No key"));
     }
 
     @Test
