@@ -164,7 +164,6 @@ public class TestRestAssured {
 
     @Test
     public void testCheckCorrectCookie(){
-
         String cookieName = "auth_cookie";
 
         Map <String, String> data = new HashMap<>();
