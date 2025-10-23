@@ -11,10 +11,13 @@ public class LongRedirectTest {
     public void testRedirect(){
 
         String currentLocation = Constants.URL + "/long_redirect";
+        int redirectCount = 0;
 
-        while (currentLocation != null) {
+        while (currentLocation != null){
             currentLocation = locationGetter(currentLocation);
+            ++redirectCount;
         }
+        System.out.println("\nCount of redirects: " + (redirectCount - 1));
     }
 
     private String locationGetter(String targetUrl){
@@ -28,7 +31,6 @@ public class LongRedirectTest {
 
         int statusCode = response.getStatusCode();
         String location = response.getHeader("Location");
-
         if (location != null && statusCode != 200) {
             return location;
         } else {
