@@ -6,7 +6,7 @@ import io.restassured.path.json.JsonPath;
 import org.junit.jupiter.api.Test;
 
 
-public class TestJsonParse {
+public class JsonParseTest {
 
     @Test
     public void testJsonParse(){
