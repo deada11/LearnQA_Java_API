@@ -46,13 +46,4 @@ public class TokensTest {
 
     }
 
-    // Будет использовано при рефакторинге
-//    private JsonPath statusChecker(Map<String, String> queryParameters) {
-//        return RestAssured
-//                .given()
-//                .queryParams(queryParameters)
-//                .get(TASK_LOCATION)
-//                .jsonPath();
-//    }
-
 }
