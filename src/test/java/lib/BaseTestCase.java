@@ -14,15 +14,15 @@ public class BaseTestCase {
 
         Headers headers = Response.getHeaders();
 
-        assertTrue(headers.hasHeaderWithName(name), "Response doesn't have header with name" + name);
+        assertTrue(headers.hasHeaderWithName(name), "Response doesn't have header with name " + name);
         return headers.getValue(name);
     }
 
-    protected String getCookie (Response Response, String name){
+    protected String getCookie(Response Response, String name){
 
         Map<String, String> cookies = Response.getCookies();
 
-        assertTrue(cookies.containsKey(name), "Response doesn't have cookie with name" + name);
+        assertTrue(cookies.containsKey(name), "Response doesn't have cookie with name " + name);
         return cookies.get(name);
     }
 
