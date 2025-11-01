@@ -1,3 +1,5 @@
+package misc;
+
 import constants.Constants;
 import io.restassured.RestAssured;
 import io.restassured.http.Headers;

@@ -1,4 +1,4 @@
-package LsTwo;
+package misc.LsTwo;
 
 import constants.Constants;
 import io.restassured.RestAssured;

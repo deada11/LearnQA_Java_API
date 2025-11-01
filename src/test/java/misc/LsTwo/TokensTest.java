@@ -1,4 +1,4 @@
-package LsTwo;
+package misc.LsTwo;
 
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
