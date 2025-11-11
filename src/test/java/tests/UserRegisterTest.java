@@ -6,12 +6,17 @@ import io.restassured.response.Response;
 import lib.Assertions;
 import lib.BaseTestCase;
 import lib.DataGenerator;
+import lib.ApiCoreRequests;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class UserRegisterTest extends BaseTestCase {
+
+    private final ApiCoreRequests apiCoreRequests = new ApiCoreRequests();
 
     @Test
     public void testCreateUserWithExistingEmail(){
@@ -47,4 +52,57 @@ public class UserRegisterTest extends BaseTestCase {
         Assertions.assertJsonHasField(responseCreateAuth, "id");
 
     }
+
+    @Test
+    public void testIncorrectEmail(){
+        Map<String, String> incorrectData = new HashMap<>();
+        incorrectData.put("email", "test.example.com");
+        incorrectData = DataGenerator.getRegistrationData(incorrectData);
+
+        Response failedResponse = apiCoreRequests.makePostRequest(Constants.URL + "/user", incorrectData);
+
+        Assertions.assertResponseTextEquals(failedResponse, "Invalid email format");
+
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"email", "password", "username", "firstName", "lastName"})
+    public void absentParametersTest(String parameter){
+        Map<String, String> incorrectData = DataGenerator.getRegistrationData();
+
+        incorrectData.remove(parameter);
+
+        Response failedResponse = apiCoreRequests.makePostRequest(Constants.URL + "/user", incorrectData);
+
+        Assertions.assertResponseTextEquals(failedResponse,
+                "The following required params are missed: " + parameter);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"username", "firstName", "lastName"})
+    public void testShortUserData(String userParameter){
+        Map<String, String> incorrectData = DataGenerator.getRegistrationData();
+
+        DataGenerator.makeUserDataShort(incorrectData, userParameter);
+
+        Response failedResponse = apiCoreRequests.makePostRequest(Constants.URL + "/user", incorrectData);
+
+        Assertions.assertResponseTextEquals(failedResponse, "The value of '" + userParameter + "' field is too short");
+
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"username", "firstName", "lastName"})
+    public void testLongUserData(String userParameter){
+        Map<String, String> incorrectData = DataGenerator.getRegistrationData();
+
+        DataGenerator.makeUserDataLong(incorrectData, userParameter);
+
+        Response failedResponse = apiCoreRequests.makePostRequest(Constants.URL + "/user", incorrectData);
+
+        Assertions.assertResponseTextEquals(failedResponse, "The value of '" + userParameter + "' field is too long");
+
+    }
+
 }
+
