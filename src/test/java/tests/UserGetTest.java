@@ -41,13 +41,13 @@ public class UserGetTest extends BaseTestCase {
                 .post(Constants.URL + "/user/login")
                 .andReturn();
 
-        String header = this.getHeader(responseGetAuth, "x-csrf-token");
-        String cookie = this.getCookie(responseGetAuth, "auth_sid");
+        String header = this.getHeader(responseGetAuth, Constants.TOKEN_NAME);
+        String cookie = this.getCookie(responseGetAuth, Constants.COOKIE_NAME);
 
         Response responseUserData = RestAssured
                 .given()
-                .header("x-csrf-token", header)
-                .cookie("auth_sid", cookie)
+                .header(Constants.TOKEN_NAME, header)
+                .cookie(Constants.COOKIE_NAME, cookie)
                 .get(Constants.URL + "/user/2")
                 .andReturn();
 
@@ -64,8 +64,8 @@ public class UserGetTest extends BaseTestCase {
 
         Response responseGetAuth = apiCoreRequests.makePostRequest(Constants.URL + "/user/login", authData);
 
-        String header = this.getHeader(responseGetAuth, "x-csrf-token");
-        String cookie = this.getCookie(responseGetAuth, "auth_sid");
+        String header = this.getHeader(responseGetAuth, Constants.TOKEN_NAME);
+        String cookie = this.getCookie(responseGetAuth, Constants.COOKIE_NAME);
         int userId = this.getIntFromJson(responseGetAuth, "user_id");
 
         Response responseUserData = apiCoreRequests.makeGetRequest(

@@ -11,15 +11,14 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import org.junit.jupiter.api.DisplayName;
 
 import lib.ApiCoreRequests;
+
+import static lib.UserActions.loginAsSuperUser;
 
 @Epic("Authorisation cases")
 @Feature("Authorisation")
@@ -33,15 +32,10 @@ public class UserAuthTest extends BaseTestCase {
 
     @BeforeEach
     public void loginUser(){
-        Map<String, String> authData = new HashMap<>();
-        authData.put("email", "vinkotov@example.com");
-        authData.put("password", "1234");
+        Response responseGetAuth = loginAsSuperUser();
 
-        Response responseGetAuth = apiCoreRequests
-                .makePostRequest(Constants.URL + "/user/login", authData);
-
-        this.cookie = this.getCookie(responseGetAuth,"auth_sid");
-        this.header = this.getHeader(responseGetAuth, "x-csrf-token");
+        this.cookie = this.getCookie(responseGetAuth,Constants.COOKIE_NAME);
+        this.header = this.getHeader(responseGetAuth, Constants.TOKEN_NAME);
         this.userIdOnAuth = this.getIntFromJson(responseGetAuth, "user_id");
         this.statusCode = responseGetAuth.getStatusCode();
     }

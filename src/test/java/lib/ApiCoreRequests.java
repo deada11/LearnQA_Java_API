@@ -1,8 +1,8 @@
 package lib;
 
+import constants.Constants;
 import io.qameta.allure.Step;
 import io.qameta.allure.restassured.AllureRestAssured;
-import io.restassured.http.Header;
 import io.restassured.response.Response;
 import java.util.Map;
 
@@ -14,8 +14,8 @@ public class ApiCoreRequests {
     public Response makeGetRequest(String url, String token, String cookie){
         return given()
                 .filter(new AllureRestAssured())
-                .header(new Header("x-csrf-token", token))
-                .cookie("auth_sid", cookie)
+                .header(Constants.TOKEN_NAME, token)
+                .cookie(Constants.COOKIE_NAME, cookie)
                 .get(url)
                 .andReturn();
     }
@@ -24,7 +24,7 @@ public class ApiCoreRequests {
     public Response makeGetRequestWithCookie(String url,  String cookie){
         return given()
                 .filter(new AllureRestAssured())
-                .cookie("auth_sid", cookie)
+                .cookie(Constants.COOKIE_NAME, cookie)
                 .get(url)
                 .andReturn();
     }
@@ -33,7 +33,7 @@ public class ApiCoreRequests {
     public Response makeGetRequestWithToken(String url,  String token){
         return given()
                 .filter(new AllureRestAssured())
-                .header("x-csrf-token", token)
+                .header(Constants.TOKEN_NAME, token)
                 .get(url)
                 .andReturn();
     }
@@ -45,5 +45,17 @@ public class ApiCoreRequests {
                 .body(authData)
                 .post(url)
                 .andReturn();
+    }
+
+    @Step("Make a Put-request")
+    public Response makePutRequest(String url, String token, String cookie, Map<String, String> dataForChange){
+        return given()
+                .filter(new AllureRestAssured())
+                .header(Constants.TOKEN_NAME, token)
+                .cookie(Constants.COOKIE_NAME, cookie)
+                .body(dataForChange)
+                .put(url)
+                .andReturn();
+
     }
 }
