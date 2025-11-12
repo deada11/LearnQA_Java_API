@@ -1,17 +1,23 @@
 package tests;
 
 import constants.Constants;
+import io.qameta.allure.Owner;
+import io.qameta.allure.TmsLink;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import lib.ApiCoreRequests;
 import lib.Assertions;
 import lib.BaseTestCase;
 import lib.DataGenerator;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Owner("Billing-team")
+@TmsLink("Get-user-data-tests-link")
+@Tag("GET_USER_INFO_TESTS")
 public class UserGetTest extends BaseTestCase {
 
     private final ApiCoreRequests apiCoreRequests = new ApiCoreRequests();
@@ -66,14 +72,14 @@ public class UserGetTest extends BaseTestCase {
 
         String header = this.getHeader(responseGetAuth, Constants.TOKEN_NAME);
         String cookie = this.getCookie(responseGetAuth, Constants.COOKIE_NAME);
-        int userId = this.getIntFromJson(responseGetAuth, "user_id");
 
         Response responseUserData = apiCoreRequests.makeGetRequest(
-                Constants.URL + "/user/" + ++userId,
+                Constants.URL + "/user/" + 123456,
                 header,
                 cookie);
 
         String expectedField = "username";
         Assertions.assertJsonHasField(responseUserData, expectedField);
+        Assertions.assertJsonHasNotField(responseUserData, "firstName");
     }
 }

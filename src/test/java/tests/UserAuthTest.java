@@ -1,19 +1,18 @@
 package tests;
 
 import constants.Constants;
+import io.qameta.allure.*;
 import lib.Assertions;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import lib.BaseTestCase;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import io.qameta.allure.Description;
-import io.qameta.allure.Epic;
-import io.qameta.allure.Feature;
 import org.junit.jupiter.api.DisplayName;
 
 import lib.ApiCoreRequests;
@@ -22,6 +21,9 @@ import static lib.UserActions.loginAsSuperUser;
 
 @Epic("Authorisation cases")
 @Feature("Authorisation")
+@Owner("Activation-team")
+@TmsLink("Authorise-tests-link")
+@Tag("AUTHORISE_TESTS")
 public class UserAuthTest extends BaseTestCase {
 
     String cookie;

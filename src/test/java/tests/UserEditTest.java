@@ -2,16 +2,21 @@ package tests;
 
 import constants.Constants;
 import io.qameta.allure.Description;
+import io.qameta.allure.Owner;
+import io.qameta.allure.TmsLink;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import lib.*;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
 
-
+@Owner("Activation-team")
+@TmsLink("Editing-user-tests-link")
+@Tag("EDITING_USER_TESTS")
 public class UserEditTest extends BaseTestCase {
 
     private static final ApiCoreRequests apiCoreRequests = new ApiCoreRequests();
